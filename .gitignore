@@ -40,4 +40,8 @@ local.properties
 .texlipse
 
 # STS (Spring Tool Suite)
+<<<<<<< HEAD
 .springBeans
+=======
+.springBeans
+>>>>>>> 8157d4a4a084f4ccebc2fc8dec844ef6d34b58b9
