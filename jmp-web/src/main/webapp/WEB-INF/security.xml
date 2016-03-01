@@ -1,0 +1,56 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:s="http://www.springframework.org/schema/security"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+    http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+
+    <beans profile="securityPartial, securityFull">
+
+        <s:authentication-manager>
+            <s:authentication-provider ref="activeDirectoryAuthenticationProvider"/>
+            <s:authentication-provider ref="restAuthenticationProvider"/>
+        </s:authentication-manager>
+
+        <import resource="classpath:rest-security-config.xml"/>
+
+        <import resource="classpath:active-directory-security-config.xml"/>
+
+    </beans>
+
+    <beans profile="securityNone">
+
+        <s:authentication-manager>
+            <s:authentication-provider ref="emptyAuthenticationProvider"/>
+        </s:authentication-manager>
+
+        <bean
+            id="emptyAuthenticationProvider"
+            class="com.edmunds.tools.vst.config.security.EmptyUsernamePasswordAuthentificationProvider"/>
+
+        <s:http pattern="/**" security="none"/>
+
+    </beans>
+
+    <beans profile="securityPartial">
+
+        <bean id="userSearch" class="org.springframework.security.ldap.search.FilterBasedLdapUserSearch">
+            <constructor-arg value="ou=Location,dc=EDMUNDS,dc=hq" />
+            <constructor-arg value="(&amp;(sAMAccountName={0})(objectClass=person))" />
+            <constructor-arg ref="ldapServer" />
+        </bean>
+
+    </beans>
+
+    <beans profile="securityFull">
+
+        <bean id="userSearch" class="org.springframework.security.ldap.search.FilterBasedLdapUserSearch">
+            <constructor-arg value="ou=Location,dc=EDMUNDS,dc=hq" />
+            <constructor-arg value="#{'(&amp;(sAMAccountName={0})(objectClass=person)(memberOf=' 
+                + activeDirectoryDefaultConfiguration.activeDirectoryVSTUsersGroupDN
+                + '))'}" />
+            <constructor-arg ref="ldapServer" />
+        </bean>
+
+    </beans>
+
+</beans>

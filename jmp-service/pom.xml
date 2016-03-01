@@ -1,0 +1,76 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+        <groupId>com.epam.jmp.tabayeu</groupId>
+        <artifactId>jmp-parent</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+  
+  <groupId>com.epam.jmp.tabayeu</groupId>
+  <artifactId>jmp-service</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+
+  <name>jmp-service</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>  <!-- Allows reusing of existing jacoco's report files -->
+	<sonar.java.codeCoveragePlugin>jacoco</sonar.java.codeCoveragePlugin>
+	<sonar.surefire.reportsPath>/target/surefire-reports</sonar.surefire.reportsPath>
+	<sonar.jacoco.reportPath>target/jacoco.exec</sonar.jacoco.reportPath>    <!-- Path of Jacoco's report file for unit tests -->
+	<sonar.jacoco.itReportPath>D:/tools-vehicle-sales-transactions/target/jacoco-it.exec</sonar.jacoco.itReportPath> <!-- Path of Jacoco's report file for integration tests. Change it to appropriate path. -->
+    <mockito-all.version>1.9.5</mockito-all.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
+	<dependency>
+		<groupId>org.testng</groupId>
+		<artifactId>testng</artifactId>
+		<version>6.9.10</version>
+	</dependency>
+    <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-all</artifactId>
+        <version>${mockito-all.version}</version>
+        <scope>test</scope>
+    </dependency>
+	
+  </dependencies>
+  
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.3</version>
+        <configuration>
+          <source>1.7</source>
+          <target>1.7</target>
+        </configuration>
+      </plugin>
+      <plugin>
+		    <groupId>org.apache.maven.plugins</groupId>
+		    <artifactId>maven-surefire-plugin</artifactId>
+		    <version>2.9</version>
+		    <configuration>
+		        <argLine>-Xmx100M -XX:MaxPermSize=512k -XX:-UseGCOverheadLimit</argLine>
+		          <suiteXmlFiles>
+		            <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
+		          </suiteXmlFiles>
+		    </configuration>
+		</plugin>
+  
+  
+	
+</plugins>
+  </build>
+  
+</project>
