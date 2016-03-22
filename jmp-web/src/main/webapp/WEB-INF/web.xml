@@ -14,39 +14,19 @@
     </welcome-file-list>
 
     <servlet>
-        <servlet-name>vst-web</servlet-name>
+        <servlet-name>jmp-web</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
 
-    <servlet>
-        <servlet-name>monitoring-dispatcher</servlet-name>
-        <servlet-class>com.edmunds.monitoring.web.servlet.MonitoringServlet</servlet-class>
-        <init-param>
-            <param-name>contextConfigLocation</param-name>
-            <param-value>classpath:runtime-monitoring-configuration.xml</param-value>
-        </init-param>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
-
     <servlet-mapping>
-        <servlet-name>vst-web</servlet-name>
+        <servlet-name>jmp-web</servlet-name>
         <url-pattern>/api/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>monitoring-dispatcher</servlet-name>
         <url-pattern>/support-internal/*</url-pattern>
     </servlet-mapping>
-    
-    <filter>
-        <filter-name>springSecurityFilterChain</filter-name>
-        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-    </filter>
-
-    <filter-mapping>
-        <filter-name>springSecurityFilterChain</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
     
     <filter>
 	    <filter-name>CORS</filter-name>
@@ -57,9 +37,4 @@
 	        <filter-name>CORS</filter-name>
 	        <url-pattern>/*</url-pattern>
 	</filter-mapping>
-
-    <context-param>
-        <param-name>contextInitializerClasses</param-name>
-        <param-value>com.edmunds.tools.vst.config.EnvironmentInitializer</param-value>
-    </context-param>
 </web-app>
